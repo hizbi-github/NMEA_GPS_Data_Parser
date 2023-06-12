@@ -18,6 +18,14 @@ TODO: Brief explanation with pseudo code...
 
 <br>
 
+### NMEA-0182 GPGGA Formate Reference:
+
+<div align="center">
+    <img src="./docs/screenshots/NMEA_0183_GPGGA_Format_Reference.png" style="width: 50%">
+</div>
+
+<br>
+
 ### Example:
 
     #include <stdio.h>
@@ -75,31 +83,31 @@ TODO: Brief explanation with pseudo code...
 
 <p align="center">
     Building for NodeMCU-32S from PlatformIO (ESP-IDF v5.0.2):
-<p/>
+</p>
 
 <div align="center">
     <img src="./docs/screenshots/oop_test_build_nodemcu32s.png" style="width: 50%">
-<div/>
+</div>
 
 <br>
 
 <p align="center">
     Parsing GPS data (printing over serial interface):
-<p/>
+</p>
 
 <div align="center">
     <img src="./docs/screenshots/oop_test_run_over_serial.png" style="width: 50%">
-<div/>
+</div>
 
 <br>
 
 <p align="center">
     Detailed output when using the functional version:
-<p/>
+</p>
 
 <div align="center">
     <img src="./docs/screenshots/functional_test_run_over_serial.png" style="width: 50%">
-<div/>
+</div>
 
 <br>
 
