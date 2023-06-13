@@ -48,8 +48,8 @@ string NMEA_GPS_Parser::getGPSRawData()
 
 void NMEA_GPS_Parser::parseGPSRawData()
 {
-    int commaPostions[15];
-    int numberOfCommasPerStandard = 15; // Also including the asterik in the total number of commas
+    int commaPostions[14];
+    int numberOfCommasPerStandard = 14; 
 
     if (verifyNMEACompliance(gpsRawData) == true && findNumberOfCommas(gpsRawData, commaPostions) == numberOfCommasPerStandard)
     {
@@ -62,13 +62,13 @@ void NMEA_GPS_Parser::parseGPSRawData()
         }
         else
         {
-            printf("\n> [ERROR] The NEMA-0183 GPS raw data failed integrity check!\n");
+            printf("\n> [ERROR] The NEMA-0183 GPS raw message failed integrity check!\n");
             parsingSuccessful = false;
         }
     }
     else
     {
-        printf("\n> [ERROR] The raw data doesn't resemble the NEMA-0183 GPS format!\n");
+        printf("\n> [ERROR] The raw message doesn't resemble the NEMA-0183 GPS format!\n");
         parsingSuccessful = false;
     }
 }
@@ -77,8 +77,8 @@ void NMEA_GPS_Parser::parseGPSRawData(string rawData)
 {
     gpsRawData = rawData;
 
-    int commaPostions[15];
-    int numberOfCommasPerStandard = 15; // Also including the asterik in the total number of commas
+    int commaPostions[14];
+    int numberOfCommasPerStandard = 14;
 
     if (verifyNMEACompliance(gpsRawData) == true && findNumberOfCommas(gpsRawData, commaPostions) == numberOfCommasPerStandard)
     {
@@ -91,27 +91,27 @@ void NMEA_GPS_Parser::parseGPSRawData(string rawData)
         }
         else
         {
-            printf("\n> [ERROR] The NEMA-0183 GPS raw data failed integrity check!\n");
+            printf("\n> [ERROR] The NEMA-0183 GPS raw message failed integrity check!\n");
             parsingSuccessful = false;
         }
     }
     else
     {
-        printf("\n> [ERROR] The raw data doesn't resemble the NEMA-0183 GPS format!\n");
+        printf("\n> [ERROR] The raw message doesn't resemble the NEMA-0183 GPS format!\n");
         parsingSuccessful = false;
     }
 }
 
 int NMEA_GPS_Parser::findNumberOfCommas(string rawData, int commaPositions[])
 {
+    int rawDataLength = rawData.length(); 
     int numberOfCommas = 0;
     int commaIndex = 0;
-    int rawDataLength = rawData.length(); 
 
     for (int index = 0; index < rawDataLength; index++)
     {
-        if (gpsRawData[index] == ',' || gpsRawData[index] == '*') // Only need the asterik's position to extract the last data field
-        {
+        if (gpsRawData[index] == ',') 
+        {                                                      
             numberOfCommas = numberOfCommas + 1;
             commaPositions[commaIndex] = index;
             commaIndex = commaIndex + 1; 
@@ -170,6 +170,8 @@ int NMEA_GPS_Parser::calculateChecksum(string rawData)
 
 void NMEA_GPS_Parser::extractGPSData(string rawData, int commaPositions[])
 {
+    int asteriskPosition = rawData.find("*");
+
     string talkerIDTemp = string{rawData[1], rawData[2]};
     string messageIDTemp = string{rawData[3], rawData[4], rawData[5]};
 
@@ -192,7 +194,7 @@ void NMEA_GPS_Parser::extractGPSData(string rawData, int commaPositions[])
     string geoidalSeparationUnitTemp = rawData.substr(commaPositions[11] + 1, commaPositions[12] - commaPositions[11] - 1);
 
     string ageOfDGPSDataTemp = rawData.substr(commaPositions[12] + 1, commaPositions[13] - commaPositions[12] - 1);
-    string dgpsStationIDTemp = rawData.substr(commaPositions[13] + 1, commaPositions[14] - commaPositions[13] - 1);
+    string dgpsStationIDTemp = rawData.substr(commaPositions[13] + 1, asteriskPosition - commaPositions[13] - 1);
 
     if (talkerIDTemp != "") {talkerID = talkerIDTemp;}
     if (messageIDTemp != "") {messageID = messageIDTemp;}
