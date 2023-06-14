@@ -7,19 +7,15 @@
 <br>
 
 This library uses a simple algorithm to parse a raw NMEA-0183 GPS-GGA message. A valid message has a maximum
-
 length of 82 characters and contains 14 data points in an ordered sequence. Below is an example of a raw message:
 
     $GPGGA,002153.000,3342.6618,N,11751.3858,W,1,10,1.2,27.0,M,-34.2,M,,0000*5E\r\n
 
 <br>
 
-The message starts with "$" character and ends with the carriage return "\r" and line feed "\n" characters. 
-
-Each message has a two characters hexadecimal checksum which come after the "*" character and before the 
-
-"\r\n" characters. Everything in between the "$" and "*" characters is the GPS data that is extracted into 
-
+The message starts with "\$" character and ends with the carriage return "\r" and line feed "\n" characters. 
+Each message has a two characters hexadecimal checksum which come after the "\*" character and before the 
+"\r\n" characters. Everything in between the "\$" and "\*" characters is the GPS data that is extracted into 
 separated variables. Here's all the 14 data points in the order they appear in the raw message:
 
 1. UTC TimeStamp
@@ -40,21 +36,15 @@ separated variables. Here's all the 14 data points in the order they appear in t
 <br>
 
 These data points are separated by 14 commas and as dictated by the NMEA-0183 standard, a missing data point 
-
 remains blank in the raw message, that is, there is NO character between the two commas ",,". This helps out 
-
 greatly when parsing as the raw message is deterministic in its structure.
 
 <br>
 
 For validation, multiple conditions need to be true. The raw message's length is to be equal to or less than 
-
 82 characters. The checksum in the raw message is compared with the calculated checksum which is calculated by 
-
-XORing all the characters between the "$" and "*" characters. The "&", "GPGGA", "\*", "\r", and "\n" characters
-
+XORing all the characters between the "\$" and "\*" characters. The "&", "GPGGA", "\*", "\r", and "\n" characters
 are identified to be in the raw message at their respective positions. Also the number of commas are made sure
-
 to be 14. A raw message is only parsed when all these conditions are satisfied. Here's a short psuedo-code:
 
     if verifyNMEACompliance() == true AND numberOfCommas() == 14
@@ -64,13 +54,9 @@ to be 14. A raw message is only parsed when all these conditions are satisfied. 
 <br>
 
 Extracting each data point is straightforward now since we already know the indices of every comma in the raw 
-
 message and also know the exact sequence of each data point as given by the NMEA-0183 standard. The characters
-
 between each consective commas are extracted using the C++ built-in "substr" function into separate strings. These 
-
 substrings are then converted to the appropriate types using the built-in "stoi" and "stod" functions only if they 
-
 aren't blank, otherwise the default value is used. The final extracted data points with their types are:
 
     1. string talkerID;
