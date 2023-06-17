@@ -110,7 +110,7 @@ int NMEA_GPS_Parser::findNumberOfCommas(string rawData, int commaPositions[])
 
     for (int index = 0; index < rawDataLength; index++)
     {
-        if (gpsRawData[index] == ',') 
+        if (rawData[index] == ',') 
         {                                                      
             numberOfCommas = numberOfCommas + 1;
             commaPositions[commaIndex] = index;
@@ -125,9 +125,9 @@ bool NMEA_GPS_Parser::verifyNMEACompliance(string rawData)
 {
     int rawDataLength = rawData.length(); 
 
-    if (rawDataLength <= 82 && gpsRawData[0] == '$' && gpsRawData.substr(1, 5) == "GPGGA" 
-        && gpsRawData[rawDataLength - 5] == '*' && gpsRawData[rawDataLength - 2] == '\r' 
-        && gpsRawData[rawDataLength - 1] == '\n')
+    if (rawDataLength <= 82 && rawData[0] == '$' && rawData.substr(1, 5) == "GPGGA" 
+        && rawData[rawDataLength - 5] == '*' && rawData[rawDataLength - 2] == '\r' 
+        && rawData[rawDataLength - 1] == '\n')
     {
         return(true);
     }
