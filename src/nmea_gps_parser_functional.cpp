@@ -63,6 +63,8 @@ NMEA_GPS_Parsed_Data parseGPSRawData(string rawData)
         printf("\n> [ERROR] The raw message doesn't resemble the NEMA-0183 GPS format!\n");
         parsedData.parsingSuccessful = false;
     }
+
+    return(parsedData);
 }
 
 int findNumberOfCommas(string rawData, int commaPositions[])
