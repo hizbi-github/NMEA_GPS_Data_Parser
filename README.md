@@ -3,10 +3,9 @@
     NMEA GPS Data Parser
 </h1>
 
-<h2 align="center">
+<h3 align="center">
     Cowlar Design Studio Assessment
-    <h3 align="center">-----------------------------------------------</h3>
-</h2>
+</h3>
 
 This library uses a simple algorithm to parse a raw NMEA-0183 GPS-GGA message. A valid message has a maximum
 length of 82 characters and contains 14 data points in an ordered sequence. Below is an example of a raw message:
